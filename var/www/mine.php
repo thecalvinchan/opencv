@@ -1,7 +1,8 @@
 <?php
 // Processing function takes in associative array with id and pictures 
 
-include 'facebook-php-sdk/src/facebook.php';
+require_once 'facebook-php-sdk/src/facebook.php';
+require_once 'opencv.php';
 
 // Handles POST requests
 $access_token = $_POST['access_token'];
@@ -40,4 +41,7 @@ foreach($friends_list['data'] as $friend) {
   }
   $results[$fid] = $pics_arr;
 }
+
+generateCSV($user,$results);
+
 ?>
