@@ -32,7 +32,7 @@ $result = $facebook->api('/'.$user.'/friends?fields=name,gender',array('access_t
 echo 'Albums: ';
 foreach($result['data'] as $friend) {
   $fid = $friend['id'];
-  echo 'Friends albums: ';
+  echo $fid['name'] . "'s albums: ";
   $albums = $facebook->api('/'.$fid.'/albums', array('access_token' => $access_token));
   var_dump($albums);
 }
