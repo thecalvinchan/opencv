@@ -26,6 +26,7 @@ echo $current;
 
 $albums = $facebook->api('/'.$user.'/albums', array('access_token' => $access_token));
 
+echo 'Albums: ';
 foreach($albums['data'] as $k => $album) {
   echo $album['name'];
 }
