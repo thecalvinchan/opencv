@@ -6,7 +6,7 @@ require 'facebook-php-sdk/src/facebook.php';
 //$access_token = $_POST['access_token'];
 $access_token = 'CAAKvI4sEfSgBAMKPn7fixPPv2ZAcchDUfV82ssN0PueZBLQN9eJI0eNTZC4DadG7xzLvuzJWZAtIbW20I1lN1cklLhrUB86F4s4caFZB8gN9GIZA2CGQTDB5xirQQjELnV87Qpdsd3OBNRqupQymD40tVTycohv8PU3B6V4kh1TKLT5kcwUF9Y';
 
-echo 'Access token: ' . $access_token;
+echo 'Access token: ' . $access_token . '<br />';
 
 $facebook = new Facebook(array(
   'appId'  => '154862557989368',
@@ -17,12 +17,15 @@ $facebook->setAccessToken($access_token);
 
 // Get User ID
 $user = $facebook->getUser();
-echo 'Userrrr';
-echo 'User ID: ' . $user;
+echo 'Userrrr<br/>';
+echo 'User ID: ' . $user . '<br/>';
+
+$user2 = $facebook->api('/me?fields=id&access_token=' . $access_token);
+echo $user2;
 
 $result = $facebook->api('/'.$user.'/friends?fields=name,gender',array('access_token' => $access_token)); 
 
-echo 'resulttt';
+echo 'resulttt<br/>';
 echo $result;
 
 foreach($result['data'] as $key => $friend){
