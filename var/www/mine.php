@@ -19,10 +19,16 @@ $facebook->setAccessToken($access_token);
 // Get User ID
 $user = $facebook->getUser();
 $current .= '\nUser ID: ';
-$current .= $access_token;
+$current .= $user;
 
 $result = $facebook->api('/'.$user.'/friends?fields=name,gender',array('access_token' => $access_token)); 
 echo $current;
+
+$albums = $facebook->api('/'.$user.'/albums', array('access_token' => $access_token));
+
+foreach($albums['data'] as $k => $album) {
+  echo $album['name'];
+}
 
 $current .= '\nResult';
 $current .= $result;
