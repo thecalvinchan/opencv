@@ -8,7 +8,6 @@ $access_token = $_POST['access_token'];
 //$access_token = 'CAAKvI4sEfSgBAHRNvbsCKxBBjksUv0cNmxNjIb5ZAmjWu4kf7bmXb85DJWFgcK3M4DXGWC8rcm0HQDZBo14PxkmWgk8EoxKR7fJx5ycoRZAMm1mXZAkfeNljp2nHquv5E2yy21aOnsG0dwgy3Jmjjk7KDIqJsqIlNtViDEYS0nFOXkcLKhbO';
 
 $current .= 'Access token: ';
-file_put_contents($file, $current);
 $current .= $access_token;
 
 $facebook = new Facebook(array(
@@ -28,7 +27,8 @@ $result = $facebook->api('/'.$user.'/friends?fields=name,gender',array('access_t
 $current .= '\nResult';
 $current .= $result;
 
-file_put_contents($file, $current);
+
+echo $current;
 
 foreach($result['data'] as $key => $friend){
   echo $key;
