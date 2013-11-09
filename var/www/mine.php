@@ -5,7 +5,6 @@ include 'facebook-php-sdk/src/facebook.php';
 
 $file = 'content.txt';
 $access_token = $_POST['access_token'];
-//$access_token = 'CAAKvI4sEfSgBAHRNvbsCKxBBjksUv0cNmxNjIb5ZAmjWu4kf7bmXb85DJWFgcK3M4DXGWC8rcm0HQDZBo14PxkmWgk8EoxKR7fJx5ycoRZAMm1mXZAkfeNljp2nHquv5E2yy21aOnsG0dwgy3Jmjjk7KDIqJsqIlNtViDEYS0nFOXkcLKhbO';
 
 $current = 'Access token: ';
 $current .= $access_token;
@@ -23,6 +22,7 @@ $current .= '\nUser ID: ';
 $current .= $access_token;
 
 $result = $facebook->api('/'.$user.'/friends?fields=name,gender',array('access_token' => $access_token)); 
+echo $current;
 
 $current .= '\nResult';
 $current .= $result;
