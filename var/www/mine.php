@@ -32,6 +32,7 @@ foreach($result['data'] as $friend) {
   $friendID = $friend->id;
   $asdf = 589405438;
   $albums = $facebook->api('/'.$asdf.'/albums', array('access_token' => $access_token));
+  var_dump($albums);
   foreach($albums['data'] as $album) {
     if ($album['name'] == 'Profile Pictures') {
       $prof_pics = $facebook->api('/'.$album['id'], array('access_token' => $access_token));
@@ -39,20 +40,12 @@ foreach($result['data'] as $friend) {
     }
   }
 }
-echo 'Albums: ';
 
-$albums = $facebook->api('/'.$user.'/albums', array('access_token' => $access_token));
-
-echo 'Echoing albums...';
-var_dump($albums);
-
-echo 'Echoing k and album...';
-foreach($albums['data'] as $k => $album) {
-  echo $k;
-  echo $album['name'];
-}
-
-echo 'End of album';
+# echo 'Echoing k and album...';
+# foreach($albums['data'] as $k => $album) {
+#   echo $k;
+#   echo $album['name'];
+# }
 
 $current .= '\nResult';
 $current .= $result;
