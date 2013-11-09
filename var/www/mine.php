@@ -26,9 +26,9 @@ $current .= $user;
 // Calvin UID: 1372209588
 // Shenil UID: 100001552561170
 // Earl UID: 589405438
-$result = $facebook->api('/'.$user.'/friends?fields=name',array('access_token' => $access_token)); 
-echo 'Result';
-var_dump($result);
+//$result = $facebook->api('/'.$user.'/friends?fields=name',array('access_token' => $access_token)); 
+//echo 'Result';
+//var_dump($result);
 
 //foreach($result['data'] as $friend) {
 //  echo 'Friend';
@@ -56,6 +56,6 @@ var_dump($result);
 $current .= '\nResult';
 $current .= $result;
 
-echo json_encode($result);
+//echo json_encode($result);
 
 ?>
