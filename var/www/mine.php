@@ -10,6 +10,8 @@ flush();
 require_once 'facebook-php-sdk/src/facebook.php';
 require_once 'opencv.php';
 
+ob_start();
+
 // Handles POST requests
 $access_token = $_POST['access_token'];
 
@@ -25,12 +27,31 @@ $user = $facebook->getUser();
 
 $friends_list = $facebook->api('/'.$user.'/friends?fields=name,gender',array('access_token' => $access_token)); 
 
+// Grab each friend's FB albums and find the Profile Pictures album
 // Array of Facebook ID's as keys and arrays of links to profile pictures as values
 $results;
+
+// Array of Facebook likes
+$list;
+
+// Connect to MySQL to store friend info
+$con = mysqli_connect('http://54.200.89.7', 'root', 'monster', 'core');
+if (mysqli_connect_errno()) {
+  echo 'Failed to connect to MySQL: ' . mysqli_connect_error();
+}
 
 // Loop through each friend
 foreach($friends_list['data'] as $friend) {
   $fid = $friend['id'];
+  $name = $friend['name'];
+
+  // Grab each friend's likes
+  $likes = $facebook->api('/'.$fid.'/likes', array('access_token' => $access_token));
+  foreach($likes['data'] as $like) {
+    $list[] = $like['name'];
+  }
+
+  $listed_likes = implode(', ', $list);
 
   // Grab each friend's FB albums and find the Profile Pictures album
   $albums = $facebook->api('/'.$fid.'/albums', array('access_token' => $access_token));
@@ -46,8 +67,13 @@ foreach($friends_list['data'] as $friend) {
     }
   }
   $results[$fid] = $pics_arr;
+
+  mysqli_query($con, 'INSERT INTO People (fb_id, name, likes) 
+                      VALUES ('.$fid.','.$name.','.$listed_likes.')');
 }
 
 generateCSV($user,$results);
+
+
 
 ?>
