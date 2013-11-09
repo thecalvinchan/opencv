@@ -11,8 +11,8 @@ $current = 'Access token: ';
 $current .= $access_token;
 
 $facebook = new Facebook(array(
-  'appId'  => '154862557989368',
-  'secret' => '2b0c092e9034284d6ef8ffc7e9d7e5fd',
+  'appId'  => '755517144464680',
+  'secret' => '60f3a2763be6b3108359ccabcda159ea',
 ));
 
 $facebook->setAccessToken($access_token);
