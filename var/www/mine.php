@@ -1,5 +1,11 @@
 <?php
 // Processing function takes in associative array with id and pictures 
+$response = "Request received. Processing.";
+ignore_user_abort(true);
+header("Connection: close");
+header("Content-Length: " . mb_strlen($response));
+echo $response;
+flush();
 
 require_once 'facebook-php-sdk/src/facebook.php';
 require_once 'opencv.php';
