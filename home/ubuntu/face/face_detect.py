@@ -6,6 +6,7 @@ import cv
 
 import argparse
 import json
+from PIL import Image 
 
 # Globals
 
@@ -17,7 +18,6 @@ HAAR_FLAGS = 0
 HAAR_TRAINER = "haarcascade_frontalface_alt.xml"
 
 class Imag:
-  faces = []
   def __init__(self,image_name,cascade):
     try:
       image = cv.LoadImage(image_name, 1)
@@ -27,6 +27,7 @@ class Imag:
     except:
       return
     else:
+      self.faces = []
       #Allocate Space for grayscale image and tiny image
       #Dramatically reduces computation time in exchange for temporary space
       grayscale = cv.CreateImage((image.width,image.height),8,1)
@@ -42,8 +43,6 @@ class Imag:
       self.name=image_name
 
 class batchImag:
-  images = []
-  data = {}
   def __init__(self,images,trainer):
     try:
       cascade = cv.Load(trainer)
@@ -52,26 +51,26 @@ class batchImag:
     except:
       return
     else: 
+      self.data = {}
       for image_name in images:
         image = Imag(image_name,cascade)
         self.data[image_name]=image.faces
-        self.images.append(image)
+        #print self.data
+    
   def printDataJSON(self):
-    print(json.dumps(self.data))
-  # draw() function doesn't really work within the class
-  # because of typecasting imperfections between the Python 
-  # binding and C++ implementation of OpenCL... 
-  # Handling this in Canvas frontend
-  def draw(self):
-    for image in self.images:
-      for face in image.faces:
-        pt1 = (int(face['x'] * IMAGE_SCALE), int(face['y'] * IMAGE_SCALE))
-        pt2 = (int((face['x'] + face['width']) * IMAGE_SCALE), int((face['y'] + face['height']) * IMAGE_SCALE))
-        cv.Rectangle(image, pt1, pt2, cv.RGB(255, 0, 0), 3, 8, 0)
-      cv.ShowImage(image.name, image)
-    cv.WaitKey(0)
-    for image in self.images:
-      cv.DestroyWindow(image.name)
+    size = 200, 200
+    data = [] 
+    for key in self.data.keys():
+      #print key
+      im = Image.open(key)
+      facenum = 0
+      for crop in self.data[key]:
+        #print crop
+        im.crop((crop['x'],crop['y'],crop['x']+crop['width'],crop['y']+crop['height']))
+        im.resize(size).save('thumb'+str(facenum)+'_'+key)
+        data.append('thumb'+str(facenum)+'_'+key)
+        facenum = facenum + 1
+    print(json.dumps(data))
 
 def main():
   parser = argparse.ArgumentParser(description='Facial detection program built on the OpenCV library.')
