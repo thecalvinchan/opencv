@@ -30,6 +30,7 @@ $result = $facebook->api('/'.$user.'/friends?fields=name',array('access_token' =
 
 foreach($result['data'] as $friend) {
   $friendID = $friend->id;
+  break;
   $asdf = 589405438;
   $albums = $facebook->api('/'.$asdf.'/albums', array('access_token' => $access_token));
   var_dump($albums);
