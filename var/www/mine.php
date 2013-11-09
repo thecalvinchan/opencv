@@ -34,6 +34,15 @@ foreach($result['data'] as $friend) {
   $fid = $friend['id'];
   echo $friend['name'] . "'s albums: ";
   $albums = $facebook->api('/'.$fid.'/albums', array('access_token' => $access_token));
+  foreach($albums['data'] as $album) {
+    if ($album['name'] == 'Profile Pictures') {
+      echo 'prof pic album id -> ' . $album['id'];
+      echo $album['link'];
+      break;
+    }
+  }
+
+
   var_dump($albums);
 }
 
