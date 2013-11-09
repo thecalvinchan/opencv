@@ -4,6 +4,7 @@
 require 'facebook-php-sdk/src/facebook.php';
 
 $access_token = $_POST['access_token'];
+echo $access_token;
 
 $facebook = new Facebook(array(
   'appId'  => '154862557989368',
