@@ -1,11 +1,11 @@
 <?php
 // Processing function takes in associative array with id and pictures 
-//$response = "Request received. Processing.";
-//ignore_user_abort(true);
-//header("Connection: close");
-//header("Content-Length: " . mb_strlen($response));
-//echo $response;
-//flush();
+$response = "Request received. Processing.";
+ignore_user_abort(true);
+header("Connection: close");
+header("Content-Length: " . mb_strlen($response));
+echo $response;
+flush();
 
 require_once 'facebook-php-sdk/src/facebook.php';
 require_once 'opencv.php';
@@ -31,16 +31,20 @@ $friends_list = $facebook->api('/'.$user.'/friends?fields=name,gender',array('ac
 // Array of Facebook ID's as keys and arrays of links to profile pictures as values
 $results;
 
+// Array of Facebook likes
+$list;
+
 // Connect to MySQL to store friend info
-$db = new PDO('mysql:host=0.0.0.0;dbname=core','root','monster');
-$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+$con = new mysqli('http://54.200.89.7', 'root', 'monster', 'core');
+if (mysqli_connect_errno()) {
+  echo 'Failed to connect to MySQL: ' . mysqli_connect_error();
+}
 
 // Loop through each friend
 foreach($friends_list['data'] as $friend) {
   $fid = $friend['id'];
   $name = $friend['name'];
-  // Array of Facebook likes
-  $list = array();
+
   // Grab each friend's likes
   $likes = $facebook->api('/'.$fid.'/likes', array('access_token' => $access_token));
   foreach($likes['data'] as $like) {
@@ -64,34 +68,12 @@ foreach($friends_list['data'] as $friend) {
   }
   $results[$fid] = $pics_arr;
 
-  $check_query = $db->prepare('SELECT * FROM People WHERE fb_id=:fb_id');
-  $check_query->bindParam(':fb_id', $fid);
-  try {
-    $check_query->execute();
-  } catch (Exception $e) {
-    echo $e;
-    exit;
-  }
-  
-  if ($check_query->rowCount() == 0) {
-    echo 'DNE';
-    $query = 'INSERT INTO People (fb_id, name, likes) VALUES (:fb_id, :name, :likes)';
-  } else {
-    echo 'Update';
-    $query = 'UPDATE People SET name=:name, likes=:likes WHERE fb_id=:fb_id';
-  }
-  $insert_query = $db->prepare($query);
-  $insert_query->bindParam(':fb_id', $fid);
-  $insert_query->bindParam(':name',$name);
-  $insert_query->bindParam(':likes',$listed_likes);
-  try {
-    $insert_query->execute();
-  } catch (Exception $e) {
-    echo $e;
-    exit;
-  }
+  mysqli_query($con, 'INSERT INTO People (fb_id, name, likes) 
+                      VALUES ('.$fid.','.$name.','.$listed_likes.')');
 }
 
 generateCSV($user,$results);
-return;
+
+
+
 ?>
