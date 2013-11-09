@@ -7,6 +7,7 @@ import cv
 import argparse
 import json
 from PIL import Image 
+from time import gmtime, strftime
 
 # Globals
 
@@ -15,14 +16,13 @@ IMAGE_SCALE = 2
 HAAR_SCALE = 1.2
 MIN_NEIGHBORS = 2
 HAAR_FLAGS = 0
-HAAR_TRAINER = "haarcascade_frontalface_alt.xml"
+HAAR_TRAINER = "/home/ubuntu/face/haarcascade_frontalface_alt.xml"
 
 class Imag:
   def __init__(self,image_name,cascade):
     try:
       image = cv.LoadImage(image_name, 1)
     except IOError:
-      #print("No such file or directory")
       return 
     except:
       return
@@ -43,7 +43,7 @@ class Imag:
       self.name=image_name
 
 class batchImag:
-  def __init__(self,images,trainer):
+  def __init__(self,images,trainer,owner):
     try:
       cascade = cv.Load(trainer)
     except TypeError:
@@ -52,23 +52,22 @@ class batchImag:
       return
     else: 
       self.data = {}
+      self.owner = str(owner)
       for image_name in images:
         image = Imag(image_name,cascade)
         self.data[image_name]=image.faces
-        #print self.data
     
   def printDataJSON(self):
     size = 200, 200
     data = [] 
     for key in self.data.keys():
-      #print key
       im = Image.open(key)
       facenum = 0
       for crop in self.data[key]:
-        #print crop
+        time = strftime("%Y-%m-%d-%H-%M-%S", gmtime())
         im.crop((crop['x'],crop['y'],crop['x']+crop['width'],crop['y']+crop['height']))
-        im.resize(size).save('thumb'+str(facenum)+'_'+key)
-        data.append('thumb'+str(facenum)+'_'+key)
+        im.resize(size).save('/tmp/resized/'+self.owner+'/'+time+self.owner+str(facenum)+'.jpg')
+        data.append('/tmp/resized/'+self.owner+'/'+time+self.owner+str(facenum)+'.jpg')
         facenum = facenum + 1
     print(json.dumps(data))
 
@@ -76,9 +75,10 @@ def main():
   parser = argparse.ArgumentParser(description='Facial detection program built on the OpenCV library.')
   parser.add_argument('files', nargs='*', help='<FILE 1> <FILE 2> <FILE 3>...')
   parser.add_argument('--cascade', dest='cascade', default=HAAR_TRAINER, help='Haar cascade file trained facial detection')
+  parser.add_argument('--owner', dest='owner', help='Haar cascade file trained facial detection')
   pargs = parser.parse_args()
 
-  images = batchImag(pargs.files,pargs.cascade)
+  images = batchImag(pargs.files,pargs.cascade,pargs.owner)
   images.printDataJSON()
 
 if __name__ == "__main__":
