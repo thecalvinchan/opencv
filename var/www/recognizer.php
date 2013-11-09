@@ -23,19 +23,21 @@ try {
   exit;
 }
 
-$link = $url_query->fetch();
+$link = $url_query->fetch(PDO::FETCH_OBJ);
+//echo $link->face;
 $decodeddata = base64_decode($data);
-echo $decodeddata;
+//echo $decodeddata;
 $im = imagecreatefromstring($decodeddata);
 $filename = '/tmp/data/'.$user.'_query.jpg';
 $imSave = imagejpeg($im, $filename);
 shell_exec('mkdir /tmp/resized/'.$user.'/');
 $result = shell_exec('python /home/ubuntu/face/face_detect.py --owner ' . $user . ' '.$filename);
+echo $result;
 $location = '';
 foreach (json_decode($result) as $file) {
     $location = $file;
 }
-$output = shell_exec('/home/ubuntu/face/./facerecognizer '.$link['face'].' '.$location);
+$output = shell_exec('/home/ubuntu/face/./facerecognizer '.$link->face.' '.$location);
 //output will contain the facebook id of the person i think...
 //Query database for that person and return his/her information.
 echo $output;

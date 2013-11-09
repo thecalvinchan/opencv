@@ -58,7 +58,7 @@ class batchImag:
         self.data[image_name]=image.faces
     
   def printDataJSON(self):
-    size = 200, 200
+    size = 100, 100
     data = [] 
     for key in self.data.keys():
       im = Image.open(key)

@@ -40,6 +40,6 @@ int main(int argc, const char *argv[]) {
     //      model->predict(testSample, predictedLabel, confidence);
     //
     string result_message = format("Predicted class = %d", predictedLabel);
-    cout << result_message << endl;
-    return 0;
+    //cout << predictedLabel << endl;
+    return predictedLabel;
 }
