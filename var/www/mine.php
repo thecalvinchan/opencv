@@ -22,18 +22,18 @@ $facebook->setAccessToken($access_token);
 $user = $facebook->getUser();
 $current .= '\nUser ID: ';
 $current .= $user;
+echo $current;
 
 // Calvin UID: 1372209588
 // Shenil UID: 100001552561170
 // Earl UID: 589405438
 $result = $facebook->api('/'.$user.'/friends?fields=name,gender',array('access_token' => $access_token)); 
-echo $current;
 
 echo 'Albums: ';
-foreach($result as $friend) {
-  echo 'Friend: ';
-  var_dump($friend);
-}
+//foreach($result['data'] as $friend) {
+//  echo 'Friend: ';
+//  var_dump($friend);
+//}
 
 $albums = $facebook->api('/'.$user.'/albums', array('access_token' => $access_token));
 
@@ -41,9 +41,6 @@ echo 'Echoing albums...';
 var_dump($albums);
 
 echo 'End of album';
-
-$current .= '\nResult';
-$current .= $result;
 
 echo json_encode($result);
 
