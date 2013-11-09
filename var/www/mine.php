@@ -33,18 +33,18 @@ var_dump($result);
 foreach($result['data'] as $friend) {
   echo 'Friend';
   var_dump($friend);
-  $friendID = $friend['id'];
-  break;
-  $asdf = 589405438;
-  $albums = $facebook->api('/'.$friendID.'/albums', array('access_token' => $access_token));
-  var_dump($albums);
-  break;
-  foreach($albums['data'] as $album) {
-    if ($album['name'] == 'Profile Pictures') {
-      $prof_pics = $facebook->api('/'.$album['id'].'/photos', array('access_token' => $access_token));
-      echo $prof_pics;
-    }
-  }
+ // $friendID = $friend['id'];
+ // break;
+ // $asdf = 589405438;
+ // $albums = $facebook->api('/'.$friendID.'/albums', array('access_token' => $access_token));
+ // var_dump($albums);
+ // break;
+ // foreach($albums['data'] as $album) {
+ //   if ($album['name'] == 'Profile Pictures') {
+ //     $prof_pics = $facebook->api('/'.$album['id'].'/photos', array('access_token' => $access_token));
+ //     echo $prof_pics;
+ //   }
+ // }
 }
 
 # echo 'Echoing k and album...';
