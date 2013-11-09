@@ -30,6 +30,10 @@ $result = $facebook->api('/'.$user.'/friends?fields=name,gender',array('access_t
 echo $current;
 
 echo 'Albums: ';
+foreach($result as $friend) {
+  echo 'Friend ID: ';
+  echo $friend->id;
+}
 
 $albums = $facebook->api('/'.$user.'/albums', array('access_token' => $access_token));
 
