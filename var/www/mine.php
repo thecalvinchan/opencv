@@ -92,6 +92,31 @@ foreach($friends_list['data'] as $friend) {
   }
 }
 
-generateCSV($user,$results);
+$location = generateCSV($user,$results);
+
+$classifier_query = $db->prepare('SELECT * FROM Faces WHERE fb_id=:fb_id');
+$classifier_query->bindParam(':fb_id',$user);
+try {
+  $classifier_query->execute();
+} catch (Exception $e) {
+  echo $e;
+  exit;
+}
+
+if ($classifier_query->rowCount() == 0) {
+  $query_string = 'INSERT INTO Faces (fb_id, face) VALUES (:fb_id, :face)';
+} else {
+  $query_string = 'UPDATE Faces SET face=:face WHERE fb_id=:fb_id';
+}
+$classifier_complete = $db->prepare($query_string);
+$classifier_complete->bindParam(':fb_id',$user);
+$classifier_complete->bindParam(':face',$location);
+try {
+  $classifier_complete->execute();
+} catch (Exception $e) {
+  echo $e;
+  exit;
+}
+
 return;
 ?>

@@ -45,6 +45,7 @@
         shell_exec('rm -r /tmp/originals/'.$glass_user.'/');
         //shell_exec('rm -r /tmp/resized/'.$glass_user.'/');
         generateClassifier($glass_user,'/tmp/data/'.$glass_user.'_data.csv');
+        return '/tmp/data/'.$glass_user.'_data.csv';
     }
 
     function generateClassifier($glass_user, $csv_link) {
