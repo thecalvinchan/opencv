@@ -31,6 +31,8 @@ foreach($albums['data'] as $k => $album) {
   echo $album['name'];
 }
 
+echo 'End of album';
+
 $current .= '\nResult';
 $current .= $result;
 
