@@ -17,9 +17,13 @@ $facebook->setAccessToken($access_token);
 
 // Get User ID
 $user = $facebook->getUser();
+echo 'Userrrr';
 echo 'User ID: ' . $user;
 
 $result = $facebook->api('/'.$user.'/friends?fields=name,gender',array('access_token' => $access_token)); 
+
+echo 'resulttt';
+echo $result;
 
 foreach($result['data'] as $key => $friend){
   echo $key;
