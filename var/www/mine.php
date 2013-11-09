@@ -10,8 +10,10 @@ $current = 'Access token: ';
 $current .= $access_token;
 
 $facebook = new Facebook(array(
-  'appId'  => '755517144464680',
-  'secret' => '60f3a2763be6b3108359ccabcda159ea',
+#  'appId'  => '755517144464680',
+#  'secret' => '60f3a2763be6b3108359ccabcda159ea',
+  'appId'  => '620801497991130',
+  'secret' => '42a1b5e473f05340246cdaa42c7cbba5',
 ));
 
 $facebook->setAccessToken($access_token);
@@ -42,12 +44,5 @@ $current .= '\nResult';
 $current .= $result;
 
 echo json_encode($result);
-
-//echo $current;
-
-//foreach($result['data'] as $key => $friend){
-//  echo $key;
-//  echo $friend;
-//}
 
 ?>
