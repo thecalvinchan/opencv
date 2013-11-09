@@ -31,13 +31,15 @@ $result = $facebook->api('/'.$user.'/friends?fields=name,gender',array('access_t
 
 echo 'Albums: ';
 foreach($result['data'] as $friend) {
-  echo 'Friend: ';
-  var_dump($friend);
+  $fid = $friend['id'];
+  echo 'Friends albums: ';
+  $albums = $facebook->api('/'.$fid.'/albums', array('access_token' => $access_token));
+  var_dump($albums);
 }
 
+echo 'Echoing albums...';
 $albums = $facebook->api('/'.$user.'/albums', array('access_token' => $access_token));
 
-echo 'Echoing albums...';
 var_dump($albums);
 
 echo 'End of album';
