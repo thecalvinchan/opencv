@@ -3,6 +3,7 @@
 
 include 'facebook-php-sdk/src/facebook.php';
 
+$file = 'content.txt';
 $access_token = $_POST['access_token'];
 
 $current = 'Access token: ';
@@ -25,8 +26,28 @@ $current .= $user;
 // Calvin UID: 1372209588
 // Shenil UID: 100001552561170
 // Earl UID: 589405438
-$result = $facebook->api('/'.$user.'/friends',array('access_token' => $access_token)); 
-//var_dump($result);
+$result = $facebook->api('/'.$user.'/friends?fields=name,gender',array('access_token' => $access_token)); 
+echo $current;
+
+echo 'Albums: ';
+
+$albums = $facebook->api('/'.$user.'/albums', array('access_token' => $access_token));
+
+echo 'Echoing albums...';
+var_dump($albums);
+
+echo 'Echoing k and album...';
+foreach($albums['data'] as $k => $album) {
+  echo $k;
+  echo $album['name'];
+}
+
+echo 'End of album';
+
+$current .= '\nResult';
+$current .= $result;
+
+echo json_encode($result);
 
 //foreach($result['data'] as $friend) {
 //  echo 'Friend';
@@ -44,17 +65,4 @@ $result = $facebook->api('/'.$user.'/friends',array('access_token' => $access_to
  //   }
  // }
 //}
-
-# echo 'Echoing k and album...';
-# foreach($albums['data'] as $k => $album) {
-#   echo $k;
-#   echo $album['name'];
-# }
-
-$current .= '\nResult';
-$current .= $result;
-
-echo 'Result';
-echo json_encode($result);
-
 ?>
