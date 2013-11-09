@@ -36,12 +36,6 @@ $albums = $facebook->api('/'.$user.'/albums', array('access_token' => $access_to
 echo 'Echoing albums...';
 var_dump($albums);
 
-//echo 'Echoing k and album...';
-//foreach($albums['data'] as $k => $album) {
-//  echo $k;
-//  echo $album['name'];
-//}
-
 echo 'End of album';
 
 $current .= '\nResult';
