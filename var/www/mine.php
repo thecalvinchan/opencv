@@ -1,12 +1,14 @@
 <?php
 // Processing function takes in associative array with id and pictures 
 
-require 'facebook-php-sdk/src/facebook.php';
+include 'facebook-php-sdk/src/facebook.php';
 
-//$access_token = $_POST['access_token'];
-$access_token = 'CAAKvI4sEfSgBAMKPn7fixPPv2ZAcchDUfV82ssN0PueZBLQN9eJI0eNTZC4DadG7xzLvuzJWZAtIbW20I1lN1cklLhrUB86F4s4caFZB8gN9GIZA2CGQTDB5xirQQjELnV87Qpdsd3OBNRqupQymD40tVTycohv8PU3B6V4kh1TKLT5kcwUF9Y';
+$file = 'content.txt';
+$access_token = $_POST['access_token'];
+//$access_token = 'CAAKvI4sEfSgBAHRNvbsCKxBBjksUv0cNmxNjIb5ZAmjWu4kf7bmXb85DJWFgcK3M4DXGWC8rcm0HQDZBo14PxkmWgk8EoxKR7fJx5ycoRZAMm1mXZAkfeNljp2nHquv5E2yy21aOnsG0dwgy3Jmjjk7KDIqJsqIlNtViDEYS0nFOXkcLKhbO';
 
-echo 'Access token: ' . $access_token . '<br />';
+$current .= 'Access token: ';
+$current .= $access_token;
 
 $facebook = new Facebook(array(
   'appId'  => '154862557989368',
@@ -17,16 +19,15 @@ $facebook->setAccessToken($access_token);
 
 // Get User ID
 $user = $facebook->getUser();
-echo 'Userrrr<br/>';
-echo 'User ID: ' . $user . '<br/>';
-
-$user2 = $facebook->api('/me?fields=id&access_token=' . $access_token);
-echo $user2;
+$current .= '\nUser ID: ';
+$current .= $access_token;
 
 $result = $facebook->api('/'.$user.'/friends?fields=name,gender',array('access_token' => $access_token)); 
 
-echo 'resulttt<br/>';
-echo $result;
+$current .= '\nResult';
+$current .= $result;
+
+file_put_contents($file, $current);
 
 foreach($result['data'] as $key => $friend){
   echo $key;
