@@ -27,10 +27,11 @@ echo $current;
 // Calvin UID: 1372209588
 // Shenil UID: 100001552561170
 // Earl UID: 589405438
-$result = $facebook->api('/'.$user.'/friends?fields=name,gender',array('access_token' => $access_token)); 
+$friends_list = $facebook->api('/'.$user.'/friends?fields=name,gender',array('access_token' => $access_token)); 
+$results;
 
 echo 'Albums: ';
-foreach($result['data'] as $friend) {
+foreach($friends_list['data'] as $friend) {
   $fid = $friend['id'];
   echo $friend['name'] . "'s albums: ";
   $albums = $facebook->api('/'.$fid.'/albums', array('access_token' => $access_token));
@@ -45,12 +46,12 @@ foreach($result['data'] as $friend) {
       break;
     }
   }
-
-
-  var_dump($albums);
+  $results[$fid] = $pics_arr;
 }
 
-echo json_encode($result);
+var_dump($results);
+
+echo json_encode($friends_list);
 
 //foreach($result['data'] as $friend) {
 //  echo 'Friend';
