@@ -55,7 +55,7 @@ class batchImag:
       for image_name in images:
         image = Imag(image_name,cascade)
         self.data[image_name]=image.faces
-        print self.data
+        #print self.data
     
   def printDataJSON(self):
     size = 200, 200
