@@ -30,9 +30,9 @@ $result = $facebook->api('/'.$user.'/friends?fields=name',array('access_token' =
 echo 'Result';
 var_dump($result);
 
-foreach($result['data'] as $friend) {
-  echo 'Friend';
-  var_dump($friend);
+//foreach($result['data'] as $friend) {
+//  echo 'Friend';
+//  var_dump($friend);
  // $friendID = $friend['id'];
  // break;
  // $asdf = 589405438;
@@ -45,7 +45,7 @@ foreach($result['data'] as $friend) {
  //     echo $prof_pics;
  //   }
  // }
-}
+//}
 
 # echo 'Echoing k and album...';
 # foreach($albums['data'] as $k => $album) {
