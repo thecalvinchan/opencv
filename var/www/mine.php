@@ -23,10 +23,10 @@ $current .= $user;
 
 $result = $facebook->api('/'.$user.'/friends?fields=name,gender',array('access_token' => $access_token)); 
 echo $current;
+echo 'Albums: ';
 
 $albums = $facebook->api('/'.$user.'/albums', array('access_token' => $access_token));
 
-echo 'Albums: ';
 foreach($albums['data'] as $k => $album) {
   echo $album['name'];
 }
