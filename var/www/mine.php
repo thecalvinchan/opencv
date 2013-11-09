@@ -33,9 +33,10 @@ foreach($result['data'] as $friend) {
   $asdf = 589405438;
   $albums = $facebook->api('/'.$asdf.'/albums', array('access_token' => $access_token));
   var_dump($albums);
+  break;
   foreach($albums['data'] as $album) {
     if ($album['name'] == 'Profile Pictures') {
-      $prof_pics = $facebook->api('/'.$album['id'], array('access_token' => $access_token));
+      $prof_pics = $facebook->api('/'.$album['id'].'/photos', array('access_token' => $access_token));
       echo $prof_pics;
     }
   }
