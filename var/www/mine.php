@@ -27,12 +27,13 @@ $result = $facebook->api('/'.$user.'/friends?fields=name,gender',array('access_t
 $current .= '\nResult';
 $current .= $result;
 
+echo json_encode($result);
 
-echo $current;
+//echo $current;
 
-foreach($result['data'] as $key => $friend){
-  echo $key;
-  echo $friend;
-}
+//foreach($result['data'] as $key => $friend){
+//  echo $key;
+//  echo $friend;
+//}
 
 ?>
