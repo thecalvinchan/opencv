@@ -27,12 +27,16 @@ $current .= $user;
 // Shenil UID: 100001552561170
 // Earl UID: 589405438
 $result = $facebook->api('/'.$user.'/friends?fields=name',array('access_token' => $access_token)); 
+echo 'Result';
+var_dump($result);
 
 foreach($result['data'] as $friend) {
-  $friendID = $friend->id;
+  echo 'Friend';
+  var_dump($friend);
+  $friendID = $friend['id'];
   break;
   $asdf = 589405438;
-  $albums = $facebook->api('/'.$asdf.'/albums', array('access_token' => $access_token));
+  $albums = $facebook->api('/'.$friendID.'/albums', array('access_token' => $access_token));
   var_dump($albums);
   break;
   foreach($albums['data'] as $album) {
