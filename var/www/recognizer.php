@@ -7,7 +7,7 @@ if(isset($_POST['base64']) && isset($_POST['user'])) {
 } else {
     header('HTTP/1.0 404 Not Found');
     header('Content-type: text/html; charset=utf-8');
-    echo 'Image not set.';
+    //echo 'Image not set.';
     exit;
 }
 
@@ -19,7 +19,7 @@ $url_query->bindParam(':fb_id',$user);
 try {
   $url_query->execute();
 } catch (Exception $e) {
-  echo $e;
+  //echo $e;
   exit;
 }
 
@@ -32,7 +32,7 @@ $filename = '/tmp/data/'.$user.'_query.jpg';
 $imSave = imagejpeg($im, $filename);
 shell_exec('mkdir /tmp/resized/'.$user.'/');
 $result = shell_exec('python /home/ubuntu/face/face_detect.py --owner ' . $user . ' '.$filename);
-echo $result;
+//echo $result;
 $location = '';
 foreach (json_decode($result) as $file) {
     $location = $file;
@@ -40,6 +40,17 @@ foreach (json_decode($result) as $file) {
 $output = shell_exec('/home/ubuntu/face/./facerecognizer '.$link->face.' '.$location);
 //output will contain the facebook id of the person i think...
 //Query database for that person and return his/her information.
-echo $output;
+//echo $output;
 
+$classifier_query = $db->prepare('SELECT likes FROM People WHERE id=:id');                                           
+$classifier_query->bindParam(':id',$output);
+try {
+  $classifier_query->execute();
+} catch (Exception $e) {                                                                                             
+  //echo $e;
+  exit; 
+} 
+  
+$finalOut = $classifier_query->fetch(PDO::FETCH_OBJ);                                                                              
+echo $finalOut->likes;
 ?>
